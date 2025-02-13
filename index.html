@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Will You Be My Valentine?</title>
+  <style>
+    /* Base styles */
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: sans-serif;
+      text-align: center;
+      background: #ffe6e6; /* light pink background */
+    }
+    .container {
+      padding: 20px;
+      margin-top: 20vh;
+    }
+    h1 {
+      font-size: 2em;
+      color: #d6336c;
+    }
+    .button {
+      padding: 10px 20px;
+      font-size: 1.2em;
+      margin: 10px;
+      cursor: pointer;
+      border: none;
+      border-radius: 5px;
+      transition: all 0.3s ease;
+    }
+    #yesButton {
+      background-color: #28a745; /* green */
+      color: white;
+    }
+    #noButton {
+      background-color: #dc3545; /* red */
+      color: white;
+    }
+
+    /* Collage container styles */
+    #collage {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      overflow: hidden;
+      background: #ffe6e6;
+    }
+    #collage img {
+      position: absolute;
+      width: 100px;
+      height: auto;
+      animation: float 10s infinite;
+    }
+    @keyframes float {
+      0% { transform: translateY(0px); }
+      50% { transform: translateY(-20px); }
+      100% { transform: translateY(0px); }
+    }
+    
+    #message {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 3em;
+      color: #d6336c;
+      z-index: 1000;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+    }
+
+  </style>
+</head>
+<body>
+  <div class="container" id="questionContainer">
+    <h1>Will you be my Valentine?</h1>
+    <button id="yesButton" class="button">Yes</button>
+    <button id="noButton" class="button">No</button>
+  </div>
+
+  <script>
+    // When "No" is clicked, increase the size of the "Yes" button.
+    document.getElementById("noButton").addEventListener("click", function() {
+      var yesButton = document.getElementById("yesButton");
+      // Get the current scale (default is 1)
+      var currentScale = yesButton.style.transform.match(/scale\(([^)]+)\)/);
+      var scale = currentScale ? parseFloat(currentScale[1]) : 1;
+      scale += 0.5; // Increase scale by 0.2
+      yesButton.style.transform = "scale(" + scale + ")";
+    });
+
+    // When "Yes" is clicked, replace the screen with a collage of heart images.
+    document.getElementById("yesButton").addEventListener("click", function() {
+      // Create a collage container
+      var collage = document.createElement("div");
+      collage.id = "collage";
+
+      var message = document.createElement("div");
+      message.id = "message";
+      message.textContent = "Yay! Pateta Valentine's Day";
+      
+      // Clear the page content and add the collage container
+      document.body.innerHTML = "";
+      document.body.appendChild(collage);
+      document.body.appendChild(message);
+
+      // Heart image URL (from Wikimedia Commons)
+      var heartImage = "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f1/Heart_coraz%C3%B3n.svg/1024px-Heart_coraz%C3%B3n.svg.png";
+
+      // Create multiple images for the collage
+      for (var i = 0; i < 50; i++) {
+        var img = document.createElement("img");
+        img.src = heartImage;
+        // Set random positions
+        img.style.top = Math.random() * 100 + "vh";
+        img.style.left = Math.random() * 100 + "vw";
+        // Apply a random rotation
+        var rotate = Math.random() * 360;
+        img.style.transform = "rotate(" + rotate + "deg)";
+        // Random animation delay for a floating effect
+        img.style.animationDelay = Math.random() * 5 + "s";
+        collage.appendChild(img);
+      }
+    });
+  </script>
+</body>
+</html>
